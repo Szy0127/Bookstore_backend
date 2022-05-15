@@ -4,6 +4,7 @@ import lombok.Getter;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class OrderWrapper {
 
     private String orderID;
     private Timestamp time;
-    private Double price;
+    private BigDecimal price;
     private String address;
     private String phone;
     private String comment;

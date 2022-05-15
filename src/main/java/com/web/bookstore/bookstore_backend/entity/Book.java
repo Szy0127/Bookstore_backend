@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 
 @Data
@@ -25,7 +26,10 @@ public class Book {
     private String name;
     private String type;
     private String author;
-    private Double price;
+
+    @Column(length=10,scale=2)
+    private BigDecimal price;
+
     private String description;
     private Integer inventory;
     private String image;

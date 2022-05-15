@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Random;
@@ -25,14 +26,14 @@ public class Order {
     @org.hibernate.annotations.CreationTimestamp
     private Timestamp time;
 
-    private Double price;
+    private BigDecimal price;
     private String address;
     private String phone;
     private String comment;
     private int phase;
 
 
-    public Order(int userID,Double price,String address,String phone,String comment){
+    public Order(int userID, BigDecimal price, String address, String phone, String comment){
         this.userID = userID;
 //        this.time = new Date().getTime();
         this.orderID = String.valueOf(new Date().getTime()) + new Random().nextInt(1000000);

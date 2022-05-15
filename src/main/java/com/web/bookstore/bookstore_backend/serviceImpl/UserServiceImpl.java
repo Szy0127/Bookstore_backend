@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -128,13 +129,13 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        double price = 0.;
+        BigDecimal price = new BigDecimal(0);
         for(BookItemSimple b:books){
             Book book = bookDao.getBookByID(b.getBookID());
             if(book.getInventory() <=0){
                 return false;
             }
-            price += book.getPrice() * b.getAmount();
+            price = price.add(book.getPrice().multiply(new BigDecimal(b.getAmount())));
         }
         Order order = new Order(userID,price,"上海交通大学","54749110","");
         orderDao.saveOrder(order);
