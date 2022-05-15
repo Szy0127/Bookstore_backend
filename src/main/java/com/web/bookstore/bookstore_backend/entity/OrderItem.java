@@ -12,14 +12,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_item")
 @JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@IdClass(value = OrderItemPK.class)
 public class OrderItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)//auto不支持mysql
-    private String id;
-
     @Column(name="orderID")
     private String orderID;
+
+    @Id
+    @Column(name="bookID")
     private int bookID;
 
     private int amount;

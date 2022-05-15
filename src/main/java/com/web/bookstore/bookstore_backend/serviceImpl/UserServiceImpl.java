@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
         for(CartItem cartItem:cartItems){
             Book book = bookDao.getBookByID(cartItem.getBookID());
             cartItemWrappers.add(new BookItemWrapper(book, cartItem.getAmount()));
-            System.out.println(book);
+//            System.out.println(book);
         }
         return cartItemWrappers;
     }
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void updateCart(CartItem cartItem) {
-        System.out.println(cartItem);
+//        System.out.println(cartItem);
         cartDao.updateCart(cartItem);
     }
 
