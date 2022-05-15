@@ -95,12 +95,12 @@ public class UserController {
             @RequestParam("password") String password
     ){
         List<OrderWrapper> res = userService.getOrderByUserID(userID, password);
-        for(OrderWrapper orderWrapper:res){
-            System.out.println(orderWrapper.getOrderID());
-            for(BookItemWrapper bookItemWrapper:orderWrapper.getOrderItems()){
-                System.out.println(bookItemWrapper.getBook());
-            }
-        }
+//        for(OrderWrapper orderWrapper:res){
+//            System.out.println(orderWrapper.getOrderID());
+//            for(BookItemWrapper bookItemWrapper:orderWrapper.getOrderItems()){
+//                System.out.println(bookItemWrapper.getBook());
+//            }
+//        }
         return res;
     }
 //@PostMapping("/getOrder")

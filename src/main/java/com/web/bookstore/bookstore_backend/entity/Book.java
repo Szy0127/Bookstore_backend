@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 
@@ -20,6 +17,7 @@ public class Book {
 
     @Id
     @Column(name = "bookID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)//auto不支持mysql
     private int bookID;
 
     private String isbn;
