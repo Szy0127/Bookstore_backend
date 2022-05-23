@@ -22,8 +22,7 @@ public class BookDaoImpl implements BookDao {
 
     @Override
     public List<Book> getBooks() {
-
-        return bookRepository.getBooks();
+        return bookRepository.findAll();
     }
 
 
