@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User,Integer> {
 
-    @Query("select a from User a where a.username = :username")
-    User getUserByName(@Param("username") String username);
+
+    User getUserByUsername(String username);
 }

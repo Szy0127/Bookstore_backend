@@ -11,17 +11,10 @@ import java.util.List;
 
 public interface CartRepository extends JpaRepository<CartItem, CartItemPK> {
 
-    @Query("select c from CartItem c where c.userID = :userID")
-    List<CartItem> getCartItemsByUserID(
-            @Param("userID")int userID
-    );
 
-//    @Query("select c from CartItem c where c.userID=:userID and c.bookID=:bookID")
-//    CartItem getCartItemsByUserBook(
-//            @Param("userID")int userID,
-//            @Param("bookID")int bookID
-//
-//    );
+
+    List<CartItem> getCartItemsByUserID(int userID);
+
 
 
 }

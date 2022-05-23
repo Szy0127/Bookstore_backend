@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByName(String username) {
-        return userRepository.getUserByName(username);
+        return userRepository.getUserByUsername(username);
     }
 
     @Override

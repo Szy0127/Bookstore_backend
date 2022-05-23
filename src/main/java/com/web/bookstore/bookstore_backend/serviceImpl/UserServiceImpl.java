@@ -26,8 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     OrderDao orderDao;
-    @Autowired
-    OrderItemDao orderItemDao;
+
 
 
     public boolean valid(int userID,String password){

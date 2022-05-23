@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order,String> {
 
-    @Query("select o from Order o where o.userID=:userID")
-    List<Order> getOrderByUserID(
-            @Param("userID") int userID);
+
+    List<Order> getOrderByUserID(int id);
 }
