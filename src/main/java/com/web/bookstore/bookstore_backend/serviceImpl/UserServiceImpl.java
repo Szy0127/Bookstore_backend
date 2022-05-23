@@ -3,14 +3,13 @@ package com.web.bookstore.bookstore_backend.serviceImpl;
 import com.web.bookstore.bookstore_backend.dao.*;
 import com.web.bookstore.bookstore_backend.entity.*;
 import com.web.bookstore.bookstore_backend.service.UserService;
-import javafx.util.Pair;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedList;
+
 import java.util.List;
 
 @Service
