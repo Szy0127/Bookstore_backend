@@ -24,6 +24,11 @@ public class CartItem {
     private int bookID;
 
 
+    @OneToOne
+    @JoinColumn(name="bookID",referencedColumnName = "bookID",insertable = false,updatable = false)
+    private Book book;
+
+
     @Column(name="amount")
     private int amount;
 

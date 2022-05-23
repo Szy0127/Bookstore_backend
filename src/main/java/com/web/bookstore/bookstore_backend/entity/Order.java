@@ -3,12 +3,12 @@ package com.web.bookstore.bookstore_backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 @NoArgsConstructor
 @Data
@@ -32,8 +32,13 @@ public class Order {
     private String comment;
     private int phase;
 
+    @OneToMany
+    @JoinColumn(name="orderID")
+    @Cascade(value= org.hibernate.annotations.CascadeType.ALL)
+    private Set<OrderItem> orderItems;
 
-    public Order(int userID, BigDecimal price, String address, String phone, String comment){
+
+    public Order(int userID, BigDecimal price, String address, String phone, String comment, List<BookItemSimple> books){
         this.userID = userID;
 //        this.time = new Date().getTime();
         this.orderID = String.valueOf(new Date().getTime()) + new Random().nextInt(1000000);
@@ -42,5 +47,10 @@ public class Order {
         this.phone = phone;
         this.comment = comment;
         this.phase = 1;
+
+        this.orderItems = new HashSet<>();
+        for(BookItemSimple b:books){
+            this.orderItems.add(new OrderItem(this.orderID, b.getBookID(), b.getAmount()));
+        }
     }
 }

@@ -64,24 +64,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BookItemWrapper> getCart(int userID, String password) {
+    public List<CartItem> getCart(int userID, String password) {
         if(!valid(userID,password)){
             return null;
         }
         List<CartItem> cartItems = cartDao.getCartByUserID(userID);
-        LinkedList<BookItemWrapper> cartItemWrappers=new LinkedList<>();
-        for(CartItem cartItem:cartItems){
-            Book book = bookDao.getBookByID(cartItem.getBookID());
-            cartItemWrappers.add(new BookItemWrapper(book, cartItem.getAmount()));
-//            System.out.println(book);
-        }
-        return cartItemWrappers;
+        return cartItems;
     }
 
     @Transactional
     @Override
     public void updateCart(CartItem cartItem) {
-//        System.out.println(cartItem);
+
         cartDao.updateCart(cartItem);
     }
 
@@ -100,25 +94,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<OrderWrapper> getOrderByUserID(int userID, String password) {
+    public List<Order> getOrderByUserID(int userID, String password) {
         if(!valid(userID,password)){
             return null;
         }
         List<Order> orders = orderDao.getOrderByUserID(userID);
-        List<OrderWrapper> res = new ArrayList<>();
-        for (Order order : orders) {
-//            System.out.println(order.getOrderID());
-            List<OrderItem> orderItems = orderItemDao.getOrderItemsByOrderID(order.getOrderID());
-            List<BookItemWrapper> wrappers = new ArrayList<>();
-            for (OrderItem orderItem : orderItems) {
-                BookItemWrapper bookItemWrapper = new BookItemWrapper(bookDao.getBookByID(orderItem.getBookID()), orderItem.getAmount());
-                wrappers.add(bookItemWrapper);
-//                System.out.println(bookItemWrapper.getBook());
-            }
-            res.add(new OrderWrapper(order, wrappers));
-        }
-//        System.out.println(res.get(2).getOrderItems().get(0).getBook());
-        return res;
+        return orders;
     }
 
 
@@ -129,6 +110,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
+        //判断是否有库存  计算价格
         BigDecimal price = new BigDecimal(0);
         for(BookItemSimple b:books){
             Book book = bookDao.getBookByID(b.getBookID());
@@ -137,12 +119,16 @@ public class UserServiceImpl implements UserService {
             }
             price = price.add(book.getPrice().multiply(new BigDecimal(b.getAmount())));
         }
-        Order order = new Order(userID,price,"上海交通大学","54749110","");
+
+        //创建订单 放入items
+        Order order = new Order(userID,price,"上海交通大学","54749110","",books);
         orderDao.saveOrder(order);
+
+        //删掉购物车的对应items
         for(BookItemSimple b:books){
-            orderItemDao.saveOrderItem(new OrderItem(order.getOrderID(),b.getBookID(),b.getAmount()));
             removeCart(userID,b.getBookID());
         }
+
         return true;
     }
 }

@@ -23,6 +23,9 @@ public class OrderItem {
     @Column(name="bookID")
     private int bookID;
 
+    @OneToOne
+    @JoinColumn(name="bookID",referencedColumnName = "bookID",insertable = false,updatable = false)
+    private Book book;
     private int amount;
 
     public OrderItem(String orderID,int bookID,int amount){

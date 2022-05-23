@@ -26,7 +26,7 @@ public class CartDaoImpl implements CartDao {
     @Override
     public void updateCart(CartItem cartItem) {
         CartItem cart = cartRepository.getOne(new CartItemPK(cartItem));
-        cartItem.setAmount(cart.getAmount());
+        cart.setAmount(cartItem.getAmount());
         cartRepository.save(cart);
     }
 

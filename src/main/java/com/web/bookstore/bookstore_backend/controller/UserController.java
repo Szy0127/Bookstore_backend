@@ -51,13 +51,13 @@ public class UserController {
     }
 
     @PostMapping("/getCart")
-    public List<BookItemWrapper> getCart(
+    public List<CartItem> getCart(
             @RequestParam("userID") int userID,
             @RequestParam("password") String password
     ){
 
 //        System.out.println(userID);
-        List<BookItemWrapper> res = userService.getCart(userID,password);
+        List<CartItem> res = userService.getCart(userID,password);
 //        System.out.println(res);
         return res;
     }
@@ -90,17 +90,12 @@ public class UserController {
     }
 
     @PostMapping("/getOrder")
-    public List<OrderWrapper> getOrder(
+    public List<Order> getOrder(
             @RequestParam("userID") int userID,
             @RequestParam("password") String password
     ){
-        List<OrderWrapper> res = userService.getOrderByUserID(userID, password);
-//        for(OrderWrapper orderWrapper:res){
-//            System.out.println(orderWrapper.getOrderID());
-//            for(BookItemWrapper bookItemWrapper:orderWrapper.getOrderItems()){
-//                System.out.println(bookItemWrapper.getBook());
-//            }
-//        }
+        List<Order> res = userService.getOrderByUserID(userID, password);
+
         return res;
     }
 //@PostMapping("/getOrder")
