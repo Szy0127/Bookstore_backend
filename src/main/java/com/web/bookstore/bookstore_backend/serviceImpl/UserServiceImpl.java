@@ -62,10 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<CartItem> getCart(int userID, String password) {
-        if(!valid(userID,password)){
-            return null;
-        }
+    public List<CartItem> getCart(int userID) {
         List<CartItem> cartItems = cartDao.getCartByUserID(userID);
         return cartItems;
     }
@@ -78,10 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addCart(int userID, String password, int bookID) {
-        if(!valid(userID,password)){
-            return false;
-        }
+    public boolean addCart(int userID, int bookID) {
         cartDao.addCart(new CartItem(userID,bookID));
         return true;
     }
@@ -92,21 +86,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Order> getOrderByUserID(int userID, String password) {
-        if(!valid(userID,password)){
-            return null;
-        }
-        List<Order> orders = orderDao.getOrderByUserID(userID);
-        return orders;
+    public List<Order> getOrderByUserID(int userID) {
+        return orderDao.getOrderByUserID(userID);
     }
 
 
     @Transactional
     @Override
-    public boolean buyBooks(int userID,String password,List<BookItemSimple> books) {
-        if(!valid(userID,password)){
-            return false;
-        }
+    public boolean buyBooks(int userID,List<BookItemSimple> books) {
 
         //判断是否有库存  计算价格
         BigDecimal price = new BigDecimal(0);

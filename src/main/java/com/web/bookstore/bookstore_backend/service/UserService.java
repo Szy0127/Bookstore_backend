@@ -10,15 +10,15 @@ public interface UserService {
     public boolean register(String username, String password, String email);
     public User login(String username,String password);
 
-    public List<CartItem> getCart(int userID, String password);
+    public List<CartItem> getCart(int userID);
     public void updateCart(CartItem cartItem);
-    public boolean addCart(int userID,String password,int bookID);
+    public boolean addCart(int userID,int bookID);
 
     public void removeCart(int userID, int bookID);
 
-    public List<Order> getOrderByUserID(int userID,String password);
+    public List<Order> getOrderByUserID(int userID);
 
-    public boolean buyBooks(int userID, String password, List<BookItemSimple> books);
+    public boolean buyBooks(int userID, List<BookItemSimple> books);
 
 //    public void getOrder()
 }

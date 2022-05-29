@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 //import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 //import com.fasterxml.jackson.databind.util.JSONPObject;
 //import com.fasterxml.jackson.databind.ObjectMapper;
+import com.web.bookstore.bookstore_backend.SessionUtil;
 import com.web.bookstore.bookstore_backend.entity.*;
 import com.web.bookstore.bookstore_backend.service.UserService;
 import javafx.util.Pair;
@@ -21,45 +22,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public boolean register(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
-            @RequestParam("email") String email
-    ){
-        try{
-            return userService.register(username,password,email);
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-
-    @PostMapping("/login")
-    public User login(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password
-    ){
-
-        User res = userService.login(username,password);
-        if(res == null){
-            System.out.println(username+"login failed");
-        }else{
-            System.out.println(username+"login successfully");
-        }
-        return res;
-    }
 
     @PostMapping("/getCart")
     public List<CartItem> getCart(
-            @RequestParam("userID") int userID,
-            @RequestParam("password") String password
+            @RequestParam("userID") int userID
     ){
-
-//        System.out.println(userID);
-        List<CartItem> res = userService.getCart(userID,password);
-//        System.out.println(res);
-        return res;
+        if(!SessionUtil.checkAuth()){
+            return null;
+        }
+        return userService.getCart(userID);
     }
 
     @PostMapping("/updateCart")
@@ -68,6 +39,9 @@ public class UserController {
             @RequestParam("bookID") int bookID,
             @RequestParam("amount") int amount
     ){
+        if(!SessionUtil.checkAuth()){
+            return ;
+        }
         userService.updateCart(new CartItem(userID,bookID,amount));
     }
 
@@ -75,52 +49,47 @@ public class UserController {
     public void removeCart(
             @RequestParam("userID") int userID,
             @RequestParam("bookID") int bookID
-
     ){
+        if(!SessionUtil.checkAuth()){
+            return ;
+        }
         userService.removeCart(userID,bookID);
     }
 
     @PostMapping("/addCart")
     public boolean addCart(
             @RequestParam("userID") int userID,
-            @RequestParam("password") String password,
             @RequestParam("bookID") int bookID
     ){
-        return userService.addCart(userID, password, bookID);
+        if(!SessionUtil.checkAuth()){
+            return false;
+        }
+        return userService.addCart(userID, bookID);
     }
 
     @PostMapping("/getOrder")
     public List<Order> getOrder(
-            @RequestParam("userID") int userID,
-            @RequestParam("password") String password
+            @RequestParam("userID") int userID
     ){
-        List<Order> res = userService.getOrderByUserID(userID, password);
 
-        return res;
+        return userService.getOrderByUserID(userID);
+
     }
-//@PostMapping("/getOrder")
-//public String getOrder(
-//        @RequestParam("userID") int userID,
-//        @RequestParam("password") String password
-//) throws JsonProcessingException {
-//    List<OrderWrapper> res = userService.getOrderByUserID(userID, password);
-//    String js = new ObjectMapper().writeValueAsString(res);
-//    for(OrderWrapper orderWrapper:res){
-//        System.out.println(orderWrapper.getOrderID());
-//        for(BookItemWrapper bookItemWrapper:orderWrapper.getOrderItems()){
-//            System.out.println(bookItemWrapper.getBook());
-//        }
-//    }
-//    return js;
-//}
 
-    @PostMapping("/buyBooks/{userID}/{password}")//必须用/
+//    @PostMapping("/buyBooks/{userID}/{password}")//必须用/
+//    public boolean buyBooks(
+//            @PathVariable("userID")int userID,
+//            @PathVariable("password")String  password,
+//            @RequestBody List<BookItemSimple> books//之前的参数必须用path传
+     @PostMapping("/buyBooks/{userID}")
     public boolean buyBooks(
             @PathVariable("userID")int userID,
-            @PathVariable("password")String  password,
-            @RequestBody List<BookItemSimple> books//之前的参数必须用path传
+            @RequestBody List<BookItemSimple> books
     ){
-        return userService.buyBooks(userID,password,books);
+        if(!SessionUtil.checkAuth()){
+            return false;
+        }
+        return userService.buyBooks(userID,books);
     }
 
 }
