@@ -10,6 +10,6 @@ public class Constant {
     public static final String JSESSIONID = "JSESSIONID";
 
     public static final Integer NO_SUCH_USER = -1;
-    public static final Integer MANAGER = 0;
+    public static final Integer MANAGER = 10;
     public static final Integer CUSTOMER = 1;
 }

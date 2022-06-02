@@ -20,5 +20,9 @@ public interface UserService {
 
     public boolean buyBooks(int userID, List<BookItemSimple> books);
 
+    public List<User> getUsers();
+
 //    public void getOrder()
+
+    public boolean banUser(int userID);
 }

@@ -12,8 +12,8 @@ public class MsgUtil {
     public static final String LOGIN_USER_ERROR_MSG = "用户名或密码错误，请重新输入！";
     public static final String NOT_LOGGED_IN_ERROR_MSG = "登录失效，请重新登录！";
 
-
-
+    public static final String AUTH = "无权限！";
+    public static final String BANNED = "您的账号暂被禁用，请联系管理员！";
     public static Msg makeMsg(boolean status, String msg, JSONObject data){
         return new Msg(status, msg, data);
     }

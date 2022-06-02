@@ -116,4 +116,15 @@ public class UserServiceImpl implements UserService {
 
         return true;
     }
+
+    @Override
+    public List<User> getUsers() {
+        return userDao.getUsers();
+    }
+
+    @Override
+    public boolean banUser(int userID) {
+        userDao.banUser(userID);
+        return true;
+    }
 }

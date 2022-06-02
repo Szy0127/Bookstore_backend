@@ -31,6 +31,22 @@ public class SessionUtil {
         return false;
     }
 
+    public static boolean checkAdmin(){
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        // Session
+        if(requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            HttpSession session = request.getSession(false);
+
+            if(session != null) {
+                Integer userType = (Integer) session.getAttribute(Constant.USER_TYPE);
+                System.out.println(userType);
+                return userType != null && userType > Constant.CUSTOMER;
+            }
+        }
+        return false;
+    }
+
     public static JSONObject getAuth(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         // Session

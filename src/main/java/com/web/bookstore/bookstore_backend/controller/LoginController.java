@@ -39,11 +39,19 @@ public class LoginController {
 
         User user = userService.login(username,password);
         if(user != null){
-
+            if(user.isBan()){
+                return MsgUtil.makeMsg(false, MsgUtil.BANNED);
+            }
             JSONObject obj = new JSONObject();
             obj.put(Constant.USER_ID, user.getUserID());
             obj.put(Constant.USERNAME, user.getUsername());
-            obj.put(Constant.USER_TYPE, 0);
+
+            if(user.isAdmin()){
+                obj.put(Constant.USER_TYPE, Constant.MANAGER);
+            }else{
+                obj.put(Constant.USER_TYPE, Constant.CUSTOMER);
+            }
+//            obj.put(Constant.USER_TYPE, 0);
             SessionUtil.setSession(obj);
 //            System.out.println("set session");
             JSONObject data = JSONObject.fromObject(user);
