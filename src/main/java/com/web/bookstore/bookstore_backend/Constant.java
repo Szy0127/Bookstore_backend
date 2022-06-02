@@ -2,7 +2,7 @@ package com.web.bookstore.bookstore_backend;
 
 
 public class Constant {
-    public static final String USER_ID = "userId";
+    public static final String USER_ID = "userID";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
     public static final String USER_TYPE = "userType";

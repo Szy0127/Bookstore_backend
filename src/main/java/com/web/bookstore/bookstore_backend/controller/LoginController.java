@@ -1,6 +1,8 @@
 package com.web.bookstore.bookstore_backend.controller;
 
 import com.web.bookstore.bookstore_backend.Constant;
+import com.web.bookstore.bookstore_backend.Msg;
+import com.web.bookstore.bookstore_backend.MsgUtil;
 import com.web.bookstore.bookstore_backend.SessionUtil;
 import com.web.bookstore.bookstore_backend.entity.User;
 import com.web.bookstore.bookstore_backend.service.UserService;
@@ -30,7 +32,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public User login(
+    public Msg login(
             @RequestParam("username") String username,
             @RequestParam("password") String password
     ){
@@ -44,13 +46,12 @@ public class LoginController {
             obj.put(Constant.USER_TYPE, 0);
             SessionUtil.setSession(obj);
 //            System.out.println("set session");
-//            JSONObject data = JSONObject.fromObject(user);
-//            data.remove(Constant.PASSWORD);
+            JSONObject data = JSONObject.fromObject(user);
+            data.remove(Constant.PASSWORD);
+            return  MsgUtil.makeMsg(true, MsgUtil.LOGIN_SUCCESS_MSG, data);
         }
 
-
-
-        return user;
+        return MsgUtil.makeMsg(false,MsgUtil.LOGIN_USER_ERROR_MSG);
     }
 
     @RequestMapping("/logout")
