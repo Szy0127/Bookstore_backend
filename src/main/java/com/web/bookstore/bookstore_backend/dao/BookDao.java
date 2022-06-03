@@ -8,4 +8,8 @@ public interface BookDao {
     Book getBookByID(Integer id);
 
     List<Book> getBooks();
+
+    void addBook(Book book);
+
+    void removeBook(Integer bookID);
 }

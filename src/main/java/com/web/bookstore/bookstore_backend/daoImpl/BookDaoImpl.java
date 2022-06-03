@@ -26,6 +26,13 @@ public class BookDaoImpl implements BookDao {
     }
 
 
+    @Override
+    public void addBook(Book book) {
+        bookRepository.save(book);
+    }
 
-
+    @Override
+    public void removeBook(Integer bookID) {
+        bookRepository.deleteById(bookID);
+    }
 }
