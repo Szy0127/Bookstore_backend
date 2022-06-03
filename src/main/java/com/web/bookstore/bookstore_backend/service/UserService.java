@@ -27,4 +27,8 @@ public interface UserService {
     public boolean banUser(int userID);
 
     public List<Order> getOrders();
+
+    public List<BookSaled> getBookSaled();
+
+    public List<UserConsumed> getUserConsumed();
 }

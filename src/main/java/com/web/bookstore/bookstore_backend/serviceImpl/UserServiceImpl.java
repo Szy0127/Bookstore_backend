@@ -4,13 +4,17 @@ import com.web.bookstore.bookstore_backend.dao.*;
 import com.web.bookstore.bookstore_backend.entity.*;
 import com.web.bookstore.bookstore_backend.service.UserService;
 
+import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -130,5 +134,48 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Order> getOrders() {
         return orderDao.getOrders();
+    }
+
+    @Override
+    public List<BookSaled> getBookSaled() {
+        List<Order> orders= getOrders();
+        Map<Integer,Integer> bookSaled = new HashMap<>();
+        for(Order order:orders){
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Integer bookID = orderItem.getBookID();
+                Integer amount = 0;
+                if(bookSaled.containsKey(bookID)){
+                    amount += bookSaled.get(bookID);
+                }
+                amount += orderItem.getAmount();
+                bookSaled.put(bookID, amount);
+            }
+        }
+        List<BookSaled> res = new ArrayList<>();
+        for(Map.Entry<Integer,Integer> entry:bookSaled.entrySet()){
+            res.add(new BookSaled(bookDao.getBookByID(entry.getKey()), entry.getValue()));
+        }
+        return res;
+    }
+
+    @Override
+    public List<UserConsumed> getUserConsumed() {
+        List<Order> orders= getOrders();
+        Map<Integer,BigDecimal> userConsumed = new HashMap<>();
+        for(Order order:orders){
+            Integer userID = order.getUserID();
+            BigDecimal consumed = new BigDecimal(0);
+            if (userConsumed.containsKey(userID)) {
+                consumed = consumed.add(userConsumed.get(userID));
+            }
+            consumed = consumed.add(order.getPrice());
+            userConsumed.put(userID, consumed);
+        }
+        List<UserConsumed> res = new ArrayList<>();
+        for(Map.Entry<Integer,BigDecimal> entry:userConsumed.entrySet()){
+            res.add(new UserConsumed(userDao.getUserByID(entry.getKey()), entry.getValue()));
+        }
+        System.out.println(res);
+        return res;
     }
 }

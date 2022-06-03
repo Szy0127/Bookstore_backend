@@ -54,6 +54,20 @@ public class UserController {
         return userService.getOrders();
     }
 
+    @RequestMapping("/getBookSaled")
+    public List<BookSaled> getBookSaled(){
+        if(!SessionUtil.checkAdmin()){
+            return null;
+        }
+        return userService.getBookSaled();
+    }
+    @RequestMapping("/getUserConsumed")
+    public List<UserConsumed> getUserConsumed(){
+        if(!SessionUtil.checkAdmin()){
+            return null;
+        }
+        return userService.getUserConsumed();
+    }
 
 
 }
