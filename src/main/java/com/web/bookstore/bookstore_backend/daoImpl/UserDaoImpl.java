@@ -40,9 +40,13 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void banUser(int userID) {
+    public boolean banUser(int userID) {
         User user = userRepository.getOne(userID);
+        if(user.isAdmin()){
+            return false;
+        }
         user.setBan(!user.isBan());
         userRepository.save(user);
+        return true;
     }
 }

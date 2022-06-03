@@ -29,7 +29,7 @@ public class UserController {
         if(!SessionUtil.checkAdmin()){
             return null;
         }
-//        System.out.println(userService.getUsers());
+        System.out.println(userService.getUsers());
 
         return userService.getUsers();
     }

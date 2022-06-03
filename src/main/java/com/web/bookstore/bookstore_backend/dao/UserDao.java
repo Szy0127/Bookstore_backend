@@ -12,5 +12,5 @@ public interface UserDao {
 
     List<User> getUsers();
 
-    void banUser(int userID);
+    boolean banUser(int userID);
 }

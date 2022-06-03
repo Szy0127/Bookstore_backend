@@ -124,7 +124,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean banUser(int userID) {
-        userDao.banUser(userID);
-        return true;
+        return userDao.banUser(userID);
     }
 }
