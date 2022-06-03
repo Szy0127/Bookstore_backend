@@ -35,4 +35,9 @@ public class BookDaoImpl implements BookDao {
     public void removeBook(Integer bookID) {
         bookRepository.deleteById(bookID);
     }
+
+    @Override
+    public void updateBook(Book book) {
+        bookRepository.save(book);
+    }
 }

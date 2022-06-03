@@ -15,4 +15,6 @@ public interface BookService {
     boolean addBook(String isbn, String name , String type, String author, BigDecimal price,String description,Integer inventory,String image);
 
     boolean removeBook(Integer bookID);
+
+    boolean updateBook(Book book);
 }

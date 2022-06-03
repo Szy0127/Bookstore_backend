@@ -12,4 +12,6 @@ public interface BookDao {
     void addBook(Book book);
 
     void removeBook(Integer bookID);
+
+    void updateBook(Book book);
 }

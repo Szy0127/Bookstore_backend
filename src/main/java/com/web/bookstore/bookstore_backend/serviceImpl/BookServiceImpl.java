@@ -36,4 +36,10 @@ public class BookServiceImpl implements BookService {
         bookDao.removeBook(bookID);
         return true;
     }
+
+    @Override
+    public boolean updateBook(Book book) {
+        bookDao.updateBook(book);
+        return  true;
+    }
 }
