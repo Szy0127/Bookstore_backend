@@ -16,7 +16,7 @@ public interface UserService {
 
     public void removeCart(int userID, int bookID);
 
-    public List<Order> getOrderByUserID(int userID);
+    public List<Order> getOrdersByUserID(int userID);
 
     public boolean buyBooks(int userID, List<BookItemSimple> books);
 
@@ -25,4 +25,6 @@ public interface UserService {
 //    public void getOrder()
 
     public boolean banUser(int userID);
+
+    public List<Order> getOrders();
 }

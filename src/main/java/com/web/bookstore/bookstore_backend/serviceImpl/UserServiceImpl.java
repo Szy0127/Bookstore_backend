@@ -86,8 +86,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Order> getOrderByUserID(int userID) {
-        return orderDao.getOrderByUserID(userID);
+    public List<Order> getOrdersByUserID(int userID) {
+        return orderDao.getOrdersByUserID(userID);
     }
 
 
@@ -125,5 +125,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean banUser(int userID) {
         return userDao.banUser(userID);
+    }
+
+    @Override
+    public List<Order> getOrders() {
+        return orderDao.getOrders();
     }
 }

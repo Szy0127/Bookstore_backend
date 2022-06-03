@@ -59,12 +59,12 @@ public class PurchaseController {
         return userService.addCart(userID, bookID);
     }
 
-    @PostMapping("/getOrder")
-    public List<Order> getOrder(
+    @PostMapping("/getOrdersByUserID")
+    public List<Order> getOrdersByUserID(
             @RequestParam("userID") int userID
     ){
 
-        return userService.getOrderByUserID(userID);
+        return userService.getOrdersByUserID(userID);
 
     }
 

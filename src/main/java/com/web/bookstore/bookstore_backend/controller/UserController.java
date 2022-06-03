@@ -46,6 +46,14 @@ public class UserController {
         return MsgUtil.makeMsg(true,MsgUtil.SUCCESS_MSG);
     }
 
+    @RequestMapping("/getOrders")
+    public List<Order> getOrders(){
+        if(!SessionUtil.checkAdmin()){
+            return null;
+        }
+        return userService.getOrders();
+    }
+
 
 
 }

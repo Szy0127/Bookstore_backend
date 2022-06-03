@@ -15,12 +15,17 @@ public class OrderDaoImpl implements OrderDao {
     @Autowired
     OrderRepository orderRepository;
     @Override
-    public List<Order> getOrderByUserID(int userID) {
+    public List<Order> getOrdersByUserID(int userID) {
         return orderRepository.getOrderByUserID(userID);
     }
 
     @Override
     public void saveOrder(Order order) {
         orderRepository.save(order);
+    }
+
+    @Override
+    public List<Order> getOrders() {
+        return orderRepository.findAll();
     }
 }
