@@ -69,5 +69,27 @@ public class UserController {
         return userService.getUserConsumed();
     }
 
+    @RequestMapping("/getBookSaledByTimeBetween")
+    public List<BookSaled> getBookSaledByTimeBetween(
+            @RequestParam("start") String start,
+            @RequestParam("end") String end
+    ){
+        if(!SessionUtil.checkAdmin()){
+            return null;
+        }
+        return userService.getBookSaledByTimeBetween(start, end);
+    }
+    @RequestMapping("/getUserConsumedByTimeBetween")
+    public List<UserConsumed> getUserConsumedByTimeBetween(
+            @RequestParam("start") String start,
+            @RequestParam("end") String end
+    ){
+        if(!SessionUtil.checkAdmin()){
+            return null;
+        }
+        return userService.getUserConsumedByTimeBetween(start, end);
+    }
+
+
 
 }

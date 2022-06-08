@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -136,9 +138,8 @@ public class UserServiceImpl implements UserService {
         return orderDao.getOrders();
     }
 
-    @Override
-    public List<BookSaled> getBookSaled() {
-        List<Order> orders= getOrders();
+
+    private List<BookSaled> _getBookSaled(List<Order> orders){
         Map<Integer,Integer> bookSaled = new HashMap<>();
         for(Order order:orders){
             for (OrderItem orderItem : order.getOrderItems()) {
@@ -158,9 +159,7 @@ public class UserServiceImpl implements UserService {
         return res;
     }
 
-    @Override
-    public List<UserConsumed> getUserConsumed() {
-        List<Order> orders= getOrders();
+    private List<UserConsumed> _getUserConsumed(List<Order> orders){
         Map<Integer,BigDecimal> userConsumed = new HashMap<>();
         for(Order order:orders){
             Integer userID = order.getUserID();
@@ -177,5 +176,58 @@ public class UserServiceImpl implements UserService {
         }
         System.out.println(res);
         return res;
+    }
+    @Override
+    public List<BookSaled> getBookSaled() {
+        return _getBookSaled(orderDao.getOrders());
+    }
+
+    @Override
+    public List<UserConsumed> getUserConsumed() {
+        return _getUserConsumed(orderDao.getOrders());
+    }
+
+    private Timestamp str2timestamp(String s){
+        Timestamp ts = null;
+        try {
+            ts = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(s).getTime());
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return ts;
+    }
+    private Timestamp str2timestamp_end(String s){
+        //默认s是当天0点 这样当天的都不会被包括 往后加一天
+        Timestamp ts = null;
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.add(calendar.DATE,1);
+            date = calendar.getTime();
+            ts = new Timestamp(date.getTime() - 1);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        return ts;
+    }
+    @Override
+    public List<BookSaled> getBookSaledByTimeBetween(String start, String end) {
+        Timestamp be = str2timestamp(start);
+        Timestamp en = str2timestamp_end(end);
+        if(be==null || en==null){
+            return null;
+        }
+        return _getBookSaled(orderDao.getOrdersByTimeBetween(be, en));
+    }
+
+    @Override
+    public List<UserConsumed> getUserConsumedByTimeBetween(String start, String end) {
+        Timestamp be = str2timestamp(start);
+        Timestamp en = str2timestamp_end(end);
+        if(be==null || en==null){
+            return null;
+        }
+        return _getUserConsumed(orderDao.getOrdersByTimeBetween(be, en));
     }
 }

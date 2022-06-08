@@ -6,6 +6,7 @@ import com.web.bookstore.bookstore_backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -27,5 +28,10 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public List<Order> getOrdersByTimeBetween(Timestamp start, Timestamp end) {
+        return orderRepository.getOrdersByTimeBetween(start, end);
     }
 }

@@ -31,4 +31,7 @@ public interface UserService {
     public List<BookSaled> getBookSaled();
 
     public List<UserConsumed> getUserConsumed();
+
+    public List<BookSaled> getBookSaledByTimeBetween(String start, String end);
+    public List<UserConsumed> getUserConsumedByTimeBetween(String start, String end);
 }
