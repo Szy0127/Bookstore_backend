@@ -34,4 +34,14 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getOrdersByTimeBetween(Timestamp start, Timestamp end) {
         return orderRepository.getOrdersByTimeBetween(start, end);
     }
+
+    @Override
+    public List<Order> getOrdersByTimeBefore(Timestamp t) {
+        return orderRepository.getOrdersByTimeBefore(t);
+    }
+
+    @Override
+    public List<Order> getOrdersByTimeAfter(Timestamp t) {
+        return orderRepository.getOrdersByTimeAfter(t);
+    }
 }

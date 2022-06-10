@@ -188,6 +188,9 @@ public class UserServiceImpl implements UserService {
     }
 
     private Timestamp str2timestamp(String s){
+        if(s.isEmpty()){
+            return null;
+        }
         Timestamp ts = null;
         try {
             ts = new Timestamp(new SimpleDateFormat("yyyy-MM-dd").parse(s).getTime());
@@ -197,6 +200,9 @@ public class UserServiceImpl implements UserService {
         return ts;
     }
     private Timestamp str2timestamp_end(String s){
+        if(s.isEmpty()){
+            return null;
+        }
         //默认s是当天0点 这样当天的都不会被包括 往后加一天
         Timestamp ts = null;
         try {
@@ -211,23 +217,25 @@ public class UserServiceImpl implements UserService {
         }
         return ts;
     }
-    @Override
-    public List<BookSaled> getBookSaledByTimeBetween(String start, String end) {
+
+    private List<Order> getOrdersByTime(String start,String end){
         Timestamp be = str2timestamp(start);
         Timestamp en = str2timestamp_end(end);
-        if(be==null || en==null){
-            return null;
+        if(be==null){
+            return orderDao.getOrdersByTimeBefore(en);
         }
-        return _getBookSaled(orderDao.getOrdersByTimeBetween(be, en));
+        if(en==null){
+            return orderDao.getOrdersByTimeAfter(be);
+        }
+        return orderDao.getOrdersByTimeBetween(be, en);
+    }
+    @Override
+    public List<BookSaled> getBookSaledByTimeBetween(String start, String end) {
+        return _getBookSaled(getOrdersByTime(start,end));
     }
 
     @Override
     public List<UserConsumed> getUserConsumedByTimeBetween(String start, String end) {
-        Timestamp be = str2timestamp(start);
-        Timestamp en = str2timestamp_end(end);
-        if(be==null || en==null){
-            return null;
-        }
-        return _getUserConsumed(orderDao.getOrdersByTimeBetween(be, en));
+        return _getUserConsumed(getOrdersByTime(start, end));
     }
 }
