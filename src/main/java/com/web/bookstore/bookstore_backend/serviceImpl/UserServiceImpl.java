@@ -134,10 +134,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Order> getOrders() {
-        return orderDao.getOrders();
+    public List<Order> getOrdersByTimeAndBook(String start, String end, String bookName) {
+        List<Order> orders = getOrdersByTime(start, end);
+        if(bookName.isEmpty()){
+            return orders;
+        }
+        List<Order> res = new ArrayList<>();
+        for(Order order:orders){
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Book book = orderItem.getBook();
+                if (book.getName().contains(bookName)) {
+                    res.add(order);
+                    break;
+                }
+            }
+        }
+        return res;
     }
-
 
     private List<BookSaled> _getBookSaled(List<Order> orders){
         Map<Integer,Integer> bookSaled = new HashMap<>();
@@ -209,7 +222,7 @@ public class UserServiceImpl implements UserService {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(s);
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(date);
-            calendar.add(calendar.DATE,1);
+            calendar.add(Calendar.DATE,1);
             date = calendar.getTime();
             ts = new Timestamp(date.getTime() - 1);
         } catch (ParseException e) {
@@ -221,6 +234,9 @@ public class UserServiceImpl implements UserService {
     private List<Order> getOrdersByTime(String start,String end){
         Timestamp be = str2timestamp(start);
         Timestamp en = str2timestamp_end(end);
+        if(be==null&&en==null){
+            return orderDao.getOrders();
+        }
         if(be==null){
             return orderDao.getOrdersByTimeBefore(en);
         }

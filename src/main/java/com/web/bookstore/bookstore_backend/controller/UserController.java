@@ -46,12 +46,16 @@ public class UserController {
         return MsgUtil.makeMsg(true,MsgUtil.SUCCESS_MSG);
     }
 
-    @RequestMapping("/getOrders")
-    public List<Order> getOrders(){
+    @RequestMapping("/getOrdersByTimeAndBook")
+    public List<Order> getOrdersByTimeAndBook(
+            @RequestParam("start") String start,
+            @RequestParam("end") String end,
+            @RequestParam("bookName") String bookName
+    ){
         if(!SessionUtil.checkAdmin()){
             return null;
         }
-        return userService.getOrders();
+        return userService.getOrdersByTimeAndBook(start, end, bookName);
     }
 
     @RequestMapping("/getBookSaled")
@@ -89,6 +93,7 @@ public class UserController {
         }
         return userService.getUserConsumedByTimeBetween(start, end);
     }
+
 
 
 
