@@ -190,15 +190,6 @@ public class UserServiceImpl implements UserService {
         System.out.println(res);
         return res;
     }
-    @Override
-    public List<BookSaled> getBookSaled() {
-        return _getBookSaled(orderDao.getOrders());
-    }
-
-    @Override
-    public List<UserConsumed> getUserConsumed() {
-        return _getUserConsumed(orderDao.getOrders());
-    }
 
     private Timestamp str2timestamp(String s){
         if(s.isEmpty()){

@@ -58,20 +58,6 @@ public class UserController {
         return userService.getOrdersByTimeAndBook(start, end, bookName);
     }
 
-    @RequestMapping("/getBookSaled")
-    public List<BookSaled> getBookSaled(){
-        if(!SessionUtil.checkAdmin()){
-            return null;
-        }
-        return userService.getBookSaled();
-    }
-    @RequestMapping("/getUserConsumed")
-    public List<UserConsumed> getUserConsumed(){
-        if(!SessionUtil.checkAdmin()){
-            return null;
-        }
-        return userService.getUserConsumed();
-    }
 
     @RequestMapping("/getBookSaledByTimeBetween")
     public List<BookSaled> getBookSaledByTimeBetween(
