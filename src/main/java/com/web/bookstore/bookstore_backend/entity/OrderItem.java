@@ -23,7 +23,7 @@ public class OrderItem {
     @Column(name="bookID")
     private int bookID;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)//cascade none
     @JoinColumn(name="bookID",referencedColumnName = "bookID",insertable = false,updatable = false)
     private Book book;
     private int amount;
