@@ -18,4 +18,10 @@ public interface OrderRepository extends JpaRepository<Order,String> {
 
     List<Order> getOrdersByTimeAfter(Timestamp t);
 
+    List<Order> getOrdersByUserIDAndTimeBetween(Integer userID,Timestamp start, Timestamp end);
+
+    List<Order> getOrdersByUserIDAndTimeBefore(Integer userID,Timestamp start);
+
+    List<Order> getOrdersByUserIDAndTimeAfter(Integer userID,Timestamp end);
+
 }

@@ -236,6 +236,22 @@ public class UserServiceImpl implements UserService {
         }
         return orderDao.getOrdersByTimeBetween(be, en);
     }
+
+    private List<Order> getOrdersByUserAndTime(Integer userID,String start,String end){
+        Timestamp be = str2timestamp(start);
+        Timestamp en = str2timestamp_end(end);
+        if(be==null&&en==null){
+            return orderDao.getOrdersByUserID(userID);
+        }
+        if(be==null){
+            return orderDao.getOrdersByUserAndTimeBefore(userID, be);
+        }
+        if(en==null){
+            return orderDao.getOrdersByUserAndTimeAfter(userID, en);
+        }
+        return orderDao.getOrdersByUserAndTimeBetween(userID, be, en);
+    }
+
     @Override
     public List<BookSaled> getBookSaledByTimeBetween(String start, String end) {
         return _getBookSaled(getOrdersByTime(start,end));
@@ -244,5 +260,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserConsumed> getUserConsumedByTimeBetween(String start, String end) {
         return _getUserConsumed(getOrdersByTime(start, end));
+    }
+
+    @Override
+    public List<BookSaled> getBookSaledByUser(Integer userID, String start, String end) {
+        return _getBookSaled(getOrdersByUserAndTime(userID, start, end));
     }
 }

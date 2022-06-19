@@ -80,6 +80,17 @@ public class UserController {
         return userService.getUserConsumedByTimeBetween(start, end);
     }
 
+    @RequestMapping("/getBookSaledByUser")
+    public List<BookSaled> getBookSaledByTimeBetween(
+            @RequestParam("userID") Integer userID,
+            @RequestParam("start") String start,
+            @RequestParam("end") String end
+    ){
+        if(!SessionUtil.checkAuth()){
+            return null;
+        }
+        return userService.getBookSaledByUser(userID,start,end);
+    }
 
 
 

@@ -17,4 +17,10 @@ public interface OrderDao {
     List<Order> getOrdersByTimeBefore(Timestamp t);
 
     List<Order> getOrdersByTimeAfter(Timestamp t);
+
+    List<Order> getOrdersByUserAndTimeBetween(Integer userID,Timestamp start, Timestamp end);
+
+    List<Order> getOrdersByUserAndTimeBefore(Integer userID,Timestamp t);
+
+    List<Order> getOrdersByUserAndTimeAfter(Integer userID,Timestamp t);
 }
