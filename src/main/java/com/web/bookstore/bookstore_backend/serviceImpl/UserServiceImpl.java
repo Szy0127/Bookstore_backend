@@ -244,10 +244,10 @@ public class UserServiceImpl implements UserService {
             return orderDao.getOrdersByUserID(userID);
         }
         if(be==null){
-            return orderDao.getOrdersByUserAndTimeBefore(userID, be);
+            return orderDao.getOrdersByUserAndTimeBefore(userID, en);
         }
         if(en==null){
-            return orderDao.getOrdersByUserAndTimeAfter(userID, en);
+            return orderDao.getOrdersByUserAndTimeAfter(userID, be);
         }
         return orderDao.getOrdersByUserAndTimeBetween(userID, be, en);
     }
@@ -263,7 +263,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<BookSaled> getBookSaledByUser(Integer userID, String start, String end) {
-        return _getBookSaled(getOrdersByUserAndTime(userID, start, end));
+    public UserStatistic getUserStatistic(Integer userID, String start, String end) {
+        List<Order> orders = getOrdersByUserAndTime(userID, start, end);
+        Map<Integer,Integer> bookSaled = new HashMap<>();
+        BigDecimal consumed = new BigDecimal(0);
+        Integer bookAmount = 0;
+        for(Order order:orders){
+            for (OrderItem orderItem : order.getOrderItems()) {
+                Integer bookID = orderItem.getBookID();
+                Integer amount = 0;
+                if(bookSaled.containsKey(bookID)){
+                    amount += bookSaled.get(bookID);
+                }
+                amount += orderItem.getAmount();
+                bookAmount += orderItem.getAmount();
+                bookSaled.put(bookID, amount);
+            }
+            consumed = consumed.add(order.getPrice());
+        }
+        List<BookSaled> res = new ArrayList<>();
+        for(Map.Entry<Integer,Integer> entry:bookSaled.entrySet()){
+            res.add(new BookSaled(bookDao.getBookByID(entry.getKey()), entry.getValue()));
+        }
+        UserStatistic userStatistic = new UserStatistic();
+        userStatistic.setBooks(res);
+        userStatistic.setBookAmount(bookAmount);
+        userStatistic.setConsumed(consumed);
+        System.out.println(userStatistic);
+        return userStatistic;
     }
 }

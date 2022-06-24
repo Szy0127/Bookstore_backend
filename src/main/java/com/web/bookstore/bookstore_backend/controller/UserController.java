@@ -80,8 +80,8 @@ public class UserController {
         return userService.getUserConsumedByTimeBetween(start, end);
     }
 
-    @RequestMapping("/getBookSaledByUser")
-    public List<BookSaled> getBookSaledByTimeBetween(
+    @RequestMapping("/getUserStatistic")
+    public UserStatistic getUserStatistic(
             @RequestParam("userID") Integer userID,
             @RequestParam("start") String start,
             @RequestParam("end") String end
@@ -89,7 +89,7 @@ public class UserController {
         if(!SessionUtil.checkAuth()){
             return null;
         }
-        return userService.getBookSaledByUser(userID,start,end);
+        return userService.getUserStatistic(userID,start,end);
     }
 
 

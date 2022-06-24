@@ -30,6 +30,6 @@ public interface UserService {
 
     public List<BookSaled> getBookSaledByTimeBetween(String start, String end);
 
-    public List<BookSaled> getBookSaledByUser(Integer userID,String start, String end);
+    public UserStatistic getUserStatistic(Integer userID,String start, String end);
     public List<UserConsumed> getUserConsumedByTimeBetween(String start, String end);
 }
