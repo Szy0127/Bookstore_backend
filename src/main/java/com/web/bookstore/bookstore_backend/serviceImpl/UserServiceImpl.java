@@ -136,11 +136,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Order> getOrdersByTimeAndBook(String start, String end, String bookName) {
         List<Order> orders = getOrdersByTime(start, end);
+        return orderFiltedByBook(orders, bookName);
+    }
+
+    public List<Order> orderFiltedByBook(List<Order> origin,String bookName){
         if(bookName.isEmpty()){
-            return orders;
+            return origin;
         }
         List<Order> res = new ArrayList<>();
-        for(Order order:orders){
+        for(Order order:origin){
             for (OrderItem orderItem : order.getOrderItems()) {
                 Book book = orderItem.getBook();
                 if (book.getName().contains(bookName)) {
@@ -150,6 +154,12 @@ public class UserServiceImpl implements UserService {
             }
         }
         return res;
+    }
+
+    @Override
+    public List<Order> getOrdersByUserAndTimeAndBook(Integer userID, String start, String end, String bookName) {
+        List<Order> orders = getOrdersByUserAndTime(userID, start, end);
+        return orderFiltedByBook(orders, bookName);
     }
 
     private List<BookSaled> _getBookSaled(List<Order> orders){

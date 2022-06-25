@@ -58,6 +58,18 @@ public class UserController {
         return userService.getOrdersByTimeAndBook(start, end, bookName);
     }
 
+    @RequestMapping("/getOrdersByUserAndTimeAndBook")
+    public List<Order> getOrdersByUserAndTimeAndBook(
+            @RequestParam("start") String start,
+            @RequestParam("end") String end,
+            @RequestParam("bookName") String bookName
+    ){
+        if(!SessionUtil.checkAuth()){
+            return null;
+        }
+        Integer userID = SessionUtil.getUserID();
+        return userService.getOrdersByUserAndTimeAndBook(userID,start, end, bookName);
+    }
 
     @RequestMapping("/getBookSaledByTimeBetween")
     public List<BookSaled> getBookSaledByTimeBetween(
