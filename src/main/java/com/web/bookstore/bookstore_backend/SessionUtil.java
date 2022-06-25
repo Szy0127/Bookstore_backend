@@ -31,6 +31,21 @@ public class SessionUtil {
         return false;
     }
 
+    public static Integer getUserID(){
+        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        // Session
+        if(requestAttributes != null) {
+            HttpServletRequest request = requestAttributes.getRequest();
+            HttpSession session = request.getSession(false);
+
+            if(session != null) {
+                Integer UserID = (Integer) session.getAttribute(Constant.USER_ID);
+                return UserID;
+            }
+        }
+        return -1;
+    }
+
     public static boolean checkAdmin(){
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         // Session

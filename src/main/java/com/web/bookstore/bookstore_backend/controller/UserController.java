@@ -82,13 +82,14 @@ public class UserController {
 
     @RequestMapping("/getUserStatistic")
     public UserStatistic getUserStatistic(
-            @RequestParam("userID") Integer userID,
+//            @RequestParam("userID") Integer userID,
             @RequestParam("start") String start,
             @RequestParam("end") String end
     ){
         if(!SessionUtil.checkAuth()){
             return null;
         }
+        Integer userID = SessionUtil.getUserID();
         return userService.getUserStatistic(userID,start,end);
     }
 
