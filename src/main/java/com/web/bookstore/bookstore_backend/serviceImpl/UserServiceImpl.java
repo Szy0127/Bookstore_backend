@@ -50,6 +50,12 @@ public class UserServiceImpl implements UserService {
         if(email.length() > 50){
             return false;
         }
+        if(!email.contains("@")){
+            return false;
+        }
+        if(!email.contains(".")){
+            return false;
+        }
 
         userDao.register(new User(username,password,email));
         return true;
