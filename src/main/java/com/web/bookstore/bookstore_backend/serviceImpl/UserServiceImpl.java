@@ -97,20 +97,23 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean buyBooks(int userID,List<BookItemSimple> books) {
+    public boolean buyBooks(int userID,List<BookItemSimple> books) throws Exception{
 
         //判断是否有库存  计算价格
         BigDecimal price = new BigDecimal(0);
         for(BookItemSimple b:books){
             Book book = bookDao.getBookByID(b.getBookID());
-            if(book.getInventory() <=0){
-                return false;
+            if(!bookDao.buyBook(b.getBookID(),b.getAmount())){
+                continue;
             }
             price = price.add(book.getPrice().multiply(new BigDecimal(b.getAmount())));
         }
 
+        if(price.equals(new BigDecimal(0))){
+            throw new Exception();
+        }
         //创建订单 放入items
         Order order = new Order(userID,price,"上海交通大学","54749110","",books);
         orderDao.saveOrder(order);

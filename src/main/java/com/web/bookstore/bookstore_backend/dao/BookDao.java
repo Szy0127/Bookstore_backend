@@ -14,4 +14,8 @@ public interface BookDao {
     void removeBook(Integer bookID);
 
     void updateBook(Book book);
+
+
+    boolean buyBook(Integer id,Integer amount);
+
 }

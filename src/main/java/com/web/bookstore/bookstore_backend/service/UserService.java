@@ -18,7 +18,7 @@ public interface UserService {
 
     public List<Order> getOrdersByUserID(int userID);
 
-    public boolean buyBooks(int userID, List<BookItemSimple> books);
+    public boolean buyBooks(int userID, List<BookItemSimple> books) throws Exception;
 
     public List<User> getUsers();
 

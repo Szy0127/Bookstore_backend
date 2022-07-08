@@ -84,6 +84,10 @@ public class PurchaseController {
             return false;
         }
         Integer userID = SessionUtil.getUserID();
-        return userService.buyBooks(userID,books);
+        try{
+            return userService.buyBooks(userID,books);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

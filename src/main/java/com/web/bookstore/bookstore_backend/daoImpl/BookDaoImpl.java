@@ -40,4 +40,16 @@ public class BookDaoImpl implements BookDao {
     public void updateBook(Book book) {
         bookRepository.save(book);
     }
+
+
+    @Override
+    public boolean buyBook(Integer id,Integer amount) {
+        Book book = bookRepository.getBookByBookID(id);
+        if(book.getInventory() < amount){
+            return false;
+        }
+        book.setInventory(book.getInventory()-amount);
+        bookRepository.save(book);
+        return true;
+    }
 }
