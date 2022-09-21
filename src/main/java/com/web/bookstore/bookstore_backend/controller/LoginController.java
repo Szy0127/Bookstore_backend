@@ -67,5 +67,10 @@ public class LoginController {
         SessionUtil.removeSession();
     }
 
+    @RequestMapping("/checkSession")
+    public boolean checkSession(){
+        return SessionUtil.getAuth()!=null;
+    }
+
 
 }
