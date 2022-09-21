@@ -5,18 +5,25 @@ import com.web.bookstore.bookstore_backend.Msg;
 import com.web.bookstore.bookstore_backend.MsgUtil;
 import com.web.bookstore.bookstore_backend.SessionUtil;
 import com.web.bookstore.bookstore_backend.entity.User;
+import com.web.bookstore.bookstore_backend.service.TimeService;
 import com.web.bookstore.bookstore_backend.service.UserService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+//@Scope("prototype")
 @RestController
 public class LoginController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    TimeService timeService;
 
     @PostMapping("/register")
     public boolean register(
@@ -56,6 +63,11 @@ public class LoginController {
 //            System.out.println("set session");
             JSONObject data = JSONObject.fromObject(user);
             data.remove(Constant.PASSWORD);
+
+
+            System.out.println(this);
+            System.out.println(timeService);
+            timeService.start();
             return  MsgUtil.makeMsg(true, MsgUtil.LOGIN_SUCCESS_MSG, data);
         }
 
@@ -63,8 +75,12 @@ public class LoginController {
     }
 
     @RequestMapping("/logout")
-    public void logout(){
+    public long logout(){
+        System.out.println(this);
+        System.out.println(timeService);
+        long res = timeService.finish();
         SessionUtil.removeSession();
+        return res;
     }
 
     @RequestMapping("/checkSession")
