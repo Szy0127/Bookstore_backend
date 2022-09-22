@@ -65,8 +65,8 @@ public class LoginController {
             data.remove(Constant.PASSWORD);
 
 
-            System.out.println(this);
-            System.out.println(timeService);
+//            System.out.println(this);
+//            System.out.println(timeService);
             timeService.start();
             return  MsgUtil.makeMsg(true, MsgUtil.LOGIN_SUCCESS_MSG, data);
         }
@@ -76,8 +76,8 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public long logout(){
-        System.out.println(this);
-        System.out.println(timeService);
+//        System.out.println(this);
+//        System.out.println(timeService);
         long res = timeService.finish();
         SessionUtil.removeSession();
         return res;

@@ -5,6 +5,8 @@ import com.web.bookstore.bookstore_backend.entity.Order;
 import com.web.bookstore.bookstore_backend.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -20,9 +22,12 @@ public class OrderDaoImpl implements OrderDao {
         return orderRepository.getOrderByUserID(userID);
     }
 
+
+    @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public void saveOrder(Order order) {
         orderRepository.save(order);
+//        int res=1/0;
     }
 
     @Override

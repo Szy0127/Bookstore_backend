@@ -32,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     OrderDao orderDao;
 
+    @Autowired
+    OrderItemDao orderItemDao;
+
 
 
     public boolean valid(int userID,String password){
@@ -103,10 +106,10 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
+//    @Transactional(rollbackFor = Exception.class)
+    @Transactional
     public boolean buyBooks(int userID,List<BookItemSimple> books) throws Exception{
-
         //判断是否有库存  计算价格
         BigDecimal price = new BigDecimal(0);
         for(BookItemSimple b:books){
@@ -120,15 +123,30 @@ public class UserServiceImpl implements UserService {
         if(price.equals(new BigDecimal(0))){
             throw new Exception();
         }
+//        int res=1/0;
         //创建订单 放入items
         Order order = new Order(userID,price,"上海交通大学","54749110","",books);
         orderDao.saveOrder(order);
+
+
+        //若级联 删去以下部分
+        List<OrderItem> orderItems = new ArrayList<>();
+        for(BookItemSimple b:books){
+            orderItems.add(new OrderItem(order.getOrderID(), b.getBookID(), b.getAmount()));
+        }
+        try{
+            orderItemDao.saveOrderItems(orderItems);
+        }catch (Exception e){
+
+        }
+        //
 
         //删掉购物车的对应items
         for(BookItemSimple b:books){
             removeCart(userID,b.getBookID());
         }
 
+//        int res=1/0;
         return true;
     }
 
@@ -154,7 +172,8 @@ public class UserServiceImpl implements UserService {
         }
         List<Order> res = new ArrayList<>();
         for(Order order:origin){
-            for (OrderItem orderItem : order.getOrderItems()) {
+            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
+//            for (OrderItem orderItem : order.getOrderItems()) {
                 Book book = orderItem.getBook();
                 if (book.getName().contains(bookName)) {
                     res.add(order);
@@ -174,7 +193,8 @@ public class UserServiceImpl implements UserService {
     private List<BookSaled> _getBookSaled(List<Order> orders){
         Map<Integer,Integer> bookSaled = new HashMap<>();
         for(Order order:orders){
-            for (OrderItem orderItem : order.getOrderItems()) {
+            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
+//            for (OrderItem orderItem : order.getOrderItems()) {
                 Integer bookID = orderItem.getBookID();
                 Integer amount = 0;
                 if(bookSaled.containsKey(bookID)){
@@ -288,7 +308,8 @@ public class UserServiceImpl implements UserService {
         BigDecimal consumed = new BigDecimal(0);
         Integer bookAmount = 0;
         for(Order order:orders){
-            for (OrderItem orderItem : order.getOrderItems()) {
+            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
+//            for (OrderItem orderItem : order.getOrderItems()) {
                 Integer bookID = orderItem.getBookID();
                 Integer amount = 0;
                 if(bookSaled.containsKey(bookID)){

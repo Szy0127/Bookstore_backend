@@ -33,9 +33,9 @@ public class Order {
     private String comment;
     private int phase;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name="orderID")
-    private Set<OrderItem> orderItems;
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+//    @JoinColumn(name="orderID")
+//    private Set<OrderItem> orderItems;
 
 
     public Order(int userID, BigDecimal price, String address, String phone, String comment, List<BookItemSimple> books){
@@ -48,9 +48,12 @@ public class Order {
         this.comment = comment;
         this.phase = 1;
 
-        this.orderItems = new HashSet<>();
-        for(BookItemSimple b:books){
-            this.orderItems.add(new OrderItem(this.orderID, b.getBookID(), b.getAmount()));
-        }
+
+        //由于与前端的接口设计中 所有OrderItem是包含在order中被返回的  所以取消级联后前端无法展示
+//        this.orderItems = new HashSet<>();
+//        for(BookItemSimple b:books){
+//            this.orderItems.add(new OrderItem(this.orderID, b.getBookID(), b.getAmount()));
+//        }
     }
+
 }
