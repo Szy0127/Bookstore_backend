@@ -5,6 +5,8 @@ import com.web.bookstore.bookstore_backend.entity.Book;
 import com.web.bookstore.bookstore_backend.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -42,6 +44,8 @@ public class BookDaoImpl implements BookDao {
     }
 
 
+
+    @Transactional(propagation = Propagation.MANDATORY)
     @Override
     public boolean buyBook(Integer id,Integer amount) {
         Book book = bookRepository.getBookByBookID(id);

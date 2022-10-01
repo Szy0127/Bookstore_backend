@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     OrderDao orderDao;
 
-    @Autowired
-    OrderItemDao orderItemDao;
+//    @Autowired
+//    OrderItemDao orderItemDao;
 
 
 
@@ -130,15 +130,15 @@ public class UserServiceImpl implements UserService {
 
 
         //若级联 删去以下部分
-        List<OrderItem> orderItems = new ArrayList<>();
-        for(BookItemSimple b:books){
-            orderItems.add(new OrderItem(order.getOrderID(), b.getBookID(), b.getAmount()));
-        }
-        try{
-            orderItemDao.saveOrderItems(orderItems);
-        }catch (Exception e){
-
-        }
+//        List<OrderItem> orderItems = new ArrayList<>();
+//        for(BookItemSimple b:books){
+//            orderItems.add(new OrderItem(order.getOrderID(), b.getBookID(), b.getAmount()));
+//        }
+//        try{
+//            orderItemDao.saveOrderItems(orderItems);
+//        }catch (Exception e){
+//
+//        }
         //
 
         //删掉购物车的对应items
@@ -172,8 +172,8 @@ public class UserServiceImpl implements UserService {
         }
         List<Order> res = new ArrayList<>();
         for(Order order:origin){
-            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
-//            for (OrderItem orderItem : order.getOrderItems()) {
+//            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
+            for (OrderItem orderItem : order.getOrderItems()) {
                 Book book = orderItem.getBook();
                 if (book.getName().contains(bookName)) {
                     res.add(order);
@@ -193,8 +193,8 @@ public class UserServiceImpl implements UserService {
     private List<BookSaled> _getBookSaled(List<Order> orders){
         Map<Integer,Integer> bookSaled = new HashMap<>();
         for(Order order:orders){
-            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
-//            for (OrderItem orderItem : order.getOrderItems()) {
+//            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
+            for (OrderItem orderItem : order.getOrderItems()) {
                 Integer bookID = orderItem.getBookID();
                 Integer amount = 0;
                 if(bookSaled.containsKey(bookID)){
@@ -308,8 +308,8 @@ public class UserServiceImpl implements UserService {
         BigDecimal consumed = new BigDecimal(0);
         Integer bookAmount = 0;
         for(Order order:orders){
-            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
-//            for (OrderItem orderItem : order.getOrderItems()) {
+//            for (OrderItem orderItem : orderItemDao.getOrderItemsByOrderID(order.getOrderID())) {
+            for (OrderItem orderItem : order.getOrderItems()) {
                 Integer bookID = orderItem.getBookID();
                 Integer amount = 0;
                 if(bookSaled.containsKey(bookID)){
