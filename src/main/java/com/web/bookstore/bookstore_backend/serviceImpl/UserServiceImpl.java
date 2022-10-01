@@ -329,7 +329,7 @@ public class UserServiceImpl implements UserService {
         userStatistic.setBooks(res);
         userStatistic.setBookAmount(bookAmount);
         userStatistic.setConsumed(consumed);
-        System.out.println(userStatistic);
+//        System.out.println(userStatistic);
         return userStatistic;
     }
 }
