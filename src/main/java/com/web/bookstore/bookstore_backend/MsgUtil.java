@@ -5,6 +5,8 @@ import net.sf.json.JSONObject;
 public class MsgUtil {
 
     public static final String SUCCESS_MSG = "成功！";
+    public static final String ORDER_SUCCESS = "订单处理成功！";
+    public static final String ORDER_FAIL = "订单处理失败！";
     public static final String LOGIN_SUCCESS_MSG = "登录成功！";
     public static final String LOGOUT_SUCCESS_MSG = "登出成功！";
     public static final String LOGOUT_ERR_MSG = "登出异常！";

@@ -19,12 +19,16 @@ public class TimeServiceImpl implements TimeService {
     @Override
     public void start() {
         loginTime = System.currentTimeMillis();
-        System.out.println(loginTime);
+//        System.out.println(loginTime);
     }
 
     @Override
     public long finish() {
         System.out.println(loginTime);
-        return System.currentTimeMillis() - loginTime;
+        if(loginTime==0){
+            return 0;
+        } else{
+            return System.currentTimeMillis() - loginTime;
+        }
     }
 }

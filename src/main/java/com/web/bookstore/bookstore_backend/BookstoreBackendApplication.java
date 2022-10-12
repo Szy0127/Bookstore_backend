@@ -18,8 +18,8 @@ public class BookstoreBackendApplication {
         return TopicBuilder.name(Constant.ORDER_REQUEST_TOPIC).partitions(1).replicas(1).build();
     }
 
-    @Bean
-    public NewTopic OrderResTopic(){
-        return TopicBuilder.name(Constant.ORDER_RESPONSE_TOPIC).partitions(1).replicas(1).build();
-    }
+//    @Bean
+//    public NewTopic OrderResTopic(){
+//        return TopicBuilder.name(Constant.ORDER_RESPONSE_TOPIC).partitions(1).replicas(1).build();
+//    }
 }
