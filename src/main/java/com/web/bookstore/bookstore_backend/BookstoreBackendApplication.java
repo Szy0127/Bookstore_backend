@@ -9,6 +9,7 @@ import org.springframework.kafka.config.TopicBuilder;
 @SpringBootApplication
 public class BookstoreBackendApplication {
 
+
     public static void main(String[] args) {
         SpringApplication.run(BookstoreBackendApplication.class, args);
     }
