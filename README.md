@@ -34,6 +34,7 @@
 2. @Transactional 事务传播与隔离属性
 3. kafka消息中间件 订单异步处理
    - `D:\apache-zookeeper-3.8.0-bin\bin\zkServer.cmd`
+      如果端口号被占用 可以通过`netstat -ano`、`taskkill /pid x /f`、`tasklist`解决
    - `D:\kafka_2.13-3.2.3\bin\windows\Kafka-server-start.bat D:\kafka_2.13-3.2.3\config\server.properties`
      `D:\kafka_2.13-3.2.3\log` 要先删干净否则会报错
 4. websocket推送订单处理结果
