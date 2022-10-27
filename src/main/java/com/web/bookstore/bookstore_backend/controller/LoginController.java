@@ -68,9 +68,10 @@ public class LoginController {
 //            System.out.println(this);
 //            System.out.println(timeService);
             timeService.start();
+            System.out.println(username+"login succuess");
             return  MsgUtil.makeMsg(true, MsgUtil.LOGIN_SUCCESS_MSG, data);
         }
-
+        System.out.println(username+"login failed");
         return MsgUtil.makeMsg(false,MsgUtil.LOGIN_USER_ERROR_MSG);
     }
 
@@ -85,7 +86,9 @@ public class LoginController {
 
     @RequestMapping("/checkSession")
     public boolean checkSession(){
-        return SessionUtil.getAuth()!=null;
+        boolean success = SessionUtil.getAuth()!=null;
+        System.out.println("checksession"+success);
+        return success;
     }
 
 

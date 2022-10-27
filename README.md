@@ -38,6 +38,6 @@
    - `D:\kafka_2.13-3.2.3\bin\windows\Kafka-server-start.bat D:\kafka_2.13-3.2.3\config\server.properties`
      `D:\kafka_2.13-3.2.3\log` 要先删干净否则会报错
 4. websocket推送订单处理结果
-5. 本地生成证书 springboot配置后可Https访问 (需要8080重定向到8443且浏览器信任此证书)
-   浏览器空白处输入thisisunsafe可去除警告
+5. 本地生成证书 springboot配置后可Https访问
    前端无法使用重定向前的地址 只能手动改成https和8443
+   前端需要使用cmd`set HTTPS=true&&npm start`启动并手动去除警告
