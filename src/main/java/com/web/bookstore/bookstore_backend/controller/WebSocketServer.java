@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class WebSocketServer {
     public WebSocketServer() {
         //每当有一个连接，都会执行一次构造方法
-        System.out.println("new connection");
+//        System.out.println("new connection");
     }
 
 //    private static final AtomicInteger COUNT = new AtomicInteger();
@@ -40,10 +40,9 @@ public class WebSocketServer {
     }
 
     public void sendMessageToUser(Integer userID, boolean success, String message) {
-        System.out.println(userID);
         Session toSession = sessions.get(userID);
         sendMessage(toSession, MsgUtil.makeMsg(success,message));
-        System.out.println(message);
+//        System.out.println(message);
     }
 
 
@@ -58,14 +57,14 @@ public class WebSocketServer {
             return;
         }
         sessions.put(userID, session);
-        System.out.println(userID + "open" );
+//        System.out.println(userID + "open" );
 
     }
 
     @OnClose
     public void onClose(@PathParam("userID") Integer userID) {
         sessions.remove(userID);
-        System.out.println(userID + "close" );
+//        System.out.println(userID + "close" );
     }
 
 //    @OnError

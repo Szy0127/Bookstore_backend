@@ -7,6 +7,7 @@ import com.web.bookstore.bookstore_backend.service.UserService;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -106,6 +107,16 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Transactional(propagation = Propagation.MANDATORY)
+    public boolean buyBook(Integer id,Integer amount) {
+        Book book = bookDao.getBookByID(id);
+        if(book.getInventory() < amount){
+            return false;
+        }
+        book.setInventory(book.getInventory()-amount);
+        bookDao.updateBook(book);
+        return true;
+    }
     @Override
 //    @Transactional(rollbackFor = Exception.class)
     @Transactional
@@ -114,7 +125,7 @@ public class UserServiceImpl implements UserService {
         BigDecimal price = new BigDecimal(0);
         for(BookItemSimple b:books){
             Book book = bookDao.getBookByID(b.getBookID());
-            if(!bookDao.buyBook(b.getBookID(),b.getAmount())){
+            if(!buyBook(b.getBookID(),b.getAmount())){
                 continue;
             }
             price = price.add(book.getPrice().multiply(new BigDecimal(b.getAmount())));

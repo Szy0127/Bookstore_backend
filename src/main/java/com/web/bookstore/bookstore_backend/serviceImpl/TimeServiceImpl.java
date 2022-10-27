@@ -24,7 +24,7 @@ public class TimeServiceImpl implements TimeService {
 
     @Override
     public long finish() {
-        System.out.println(loginTime);
+//        System.out.println(loginTime);
         if(loginTime==0){
             return 0;
         } else{

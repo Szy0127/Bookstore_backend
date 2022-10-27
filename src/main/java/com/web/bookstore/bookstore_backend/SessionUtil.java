@@ -55,7 +55,7 @@ public class SessionUtil {
 
             if(session != null) {
                 Integer userType = (Integer) session.getAttribute(Constant.USER_TYPE);
-                System.out.println(userType);
+//                System.out.println(userType);
                 return userType != null && userType > Constant.CUSTOMER;
             }
         }

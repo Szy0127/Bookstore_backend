@@ -41,3 +41,6 @@
 5. 本地生成证书 springboot配置后可Https访问
    前端无法使用重定向前的地址 只能手动改成https和8443
    前端需要使用cmd`set HTTPS=true&&npm start`启动并手动去除警告
+   但是每次跳转都会出现警告 导致服务出现奇怪的错误
+6. SpringCache+Redis缓存
+   `redis-server --service-start`
