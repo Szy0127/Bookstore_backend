@@ -1,6 +1,6 @@
-package com.web.bookstore.bookstore_backend;
+package com.web.bookstore.bookstore_backend.utils;
 
-import com.web.bookstore.bookstore_backend.Constant;
+import com.web.bookstore.bookstore_backend.utils.Constant;
 import net.sf.json.JSONObject;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

@@ -1,4 +1,4 @@
-package com.web.bookstore.bookstore_backend;
+package com.web.bookstore.bookstore_backend.utils;
 
 
 public class Constant {

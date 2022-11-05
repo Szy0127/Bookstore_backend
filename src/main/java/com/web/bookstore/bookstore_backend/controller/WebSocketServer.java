@@ -2,8 +2,8 @@ package com.web.bookstore.bookstore_backend.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.bookstore.bookstore_backend.Msg;
-import com.web.bookstore.bookstore_backend.MsgUtil;
+import com.web.bookstore.bookstore_backend.utils.Msg;
+import com.web.bookstore.bookstore_backend.utils.MsgUtil;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.OnClose;

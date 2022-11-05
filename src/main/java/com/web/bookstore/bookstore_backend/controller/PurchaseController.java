@@ -2,8 +2,8 @@ package com.web.bookstore.bookstore_backend.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.web.bookstore.bookstore_backend.Constant;
-import com.web.bookstore.bookstore_backend.SessionUtil;
+import com.web.bookstore.bookstore_backend.utils.Constant;
+import com.web.bookstore.bookstore_backend.utils.SessionUtil;
 import com.web.bookstore.bookstore_backend.entity.BookItemSimple;
 import com.web.bookstore.bookstore_backend.entity.CartItem;
 import com.web.bookstore.bookstore_backend.entity.Order;

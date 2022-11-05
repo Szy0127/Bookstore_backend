@@ -44,3 +44,4 @@
    但是每次跳转都会出现警告 导致服务出现奇怪的错误
 6. SpringCache+Redis缓存
    `redis-server --service-start`
+7. 全文搜索`D:\solr-8.11.2\bin\solr.cmd -p 8983`
