@@ -1,6 +1,8 @@
 package com.web.bookstore.bookstore_backend;
 
+import com.web.bookstore.bookstore_backend.controller.BookController;
 import com.web.bookstore.bookstore_backend.dao.BookDao;
+import com.web.bookstore.bookstore_backend.entity.Book;
 import com.web.bookstore.bookstore_backend.utils.SolrUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ class BookstoreBackendApplicationTests {
     private BookDao bookDao;
     @Autowired
     private SolrUtil solrUtil;
+
+    @Autowired
+    private BookController bookController;
     @Test
     void solrAddBooks(){
         solrUtil.addBooks(bookDao.getBooks());
@@ -33,5 +38,15 @@ class BookstoreBackendApplicationTests {
         books = solrUtil.query("*");
         System.out.println(books);
     }
+
+    @Test
+    void solrremove(){
+//        Book book = new Book();
+//        book.setBookID(123);
+//        book.setDescription("fadfsafda");
+//        solrUtil.addBook(book);
+        solrUtil.removeBook(123);
+    }
+
 
 }

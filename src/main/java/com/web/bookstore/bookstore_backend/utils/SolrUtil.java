@@ -1,13 +1,10 @@
 package com.web.bookstore.bookstore_backend.utils;
 
-import com.web.bookstore.bookstore_backend.config.SolrConfig;
-import com.web.bookstore.bookstore_backend.dao.BookDao;
 import com.web.bookstore.bookstore_backend.entity.Book;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -50,6 +47,16 @@ public class SolrUtil {
             solrClient.commit(collection);
             return true;
         } catch (IOException | SolrServerException e) {
+            return false;
+        }
+    }
+
+    public boolean removeBook(Integer bookID){
+        try {
+            solrClient.deleteById(collection, bookID.toString());
+            solrClient.commit(collection);
+            return true;
+        } catch (SolrServerException | IOException e) {
             return false;
         }
     }

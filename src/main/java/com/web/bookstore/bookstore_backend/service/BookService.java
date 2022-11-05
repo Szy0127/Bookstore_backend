@@ -11,10 +11,13 @@ public interface BookService {
 
     List<Book> getBooks();
 
+    List<Book>  searchBooksByDescription(String description);
+
 
     boolean addBook(String isbn, String name , String type, String author, BigDecimal price,String description,Integer inventory,String image);
 
     boolean removeBook(Integer bookID);
 
     boolean updateBook(Book book);
+    boolean updateBookIndex(Book book);
 }

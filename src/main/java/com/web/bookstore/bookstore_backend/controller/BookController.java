@@ -21,6 +21,13 @@ public class BookController {
         return bookService.getBooks();
     }
 
+    @RequestMapping("/searchBooksByDescription")
+    public List<Book> searchBooksByDescription(
+            @RequestParam("description") String description
+    ){
+        return bookService.searchBooksByDescription(description);
+    }
+
     @RequestMapping("getBook")
     public Book getBookByID(
             @RequestParam("ID") Integer ID
@@ -76,4 +83,18 @@ public class BookController {
             return MsgUtil.makeMsg(false, MsgUtil.ERROR_MSG);
         }
     }
+    @PostMapping("/updateBookIndex")
+    public Msg updateBookIndex(
+            @RequestBody Book book
+    ) {
+        if (!SessionUtil.checkAdmin()) {
+            return MsgUtil.makeMsg(false, MsgUtil.AUTH);
+        }
+        if (bookService.updateBookIndex(book)) {
+            return MsgUtil.makeMsg(true, MsgUtil.SUCCESS_MSG);
+        } else {
+            return MsgUtil.makeMsg(false, MsgUtil.ERROR_MSG);
+        }
+    }
+
 }
