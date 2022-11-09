@@ -40,9 +40,9 @@
 4. websocket推送订单处理结果
 5. 本地生成证书 springboot配置后可Https访问
    前端无法使用重定向前的地址 只能手动改成https和8443
-   前端需要使用cmd`set HTTPS=true&&npm start`启动并手动去除警告
-   但是每次跳转都会出现警告 导致服务出现奇怪的错误
+   前端需要使用cmd`set HTTPS=true&&npm start`并在空白处输入thisisunsafe
 6. SpringCache+Redis缓存
    `redis-server --service-start`
 7. 全文搜索 通过简介中的内容搜索书籍信息(索引库)
     `D:\solr-8.11.2\bin\solr.cmd -p 8983`
+8. 微服务 通过网关同定向至后端服务 https与跨域配置均在网关完成
